@@ -1,0 +1,7 @@
+ipython[all]==6.1.0
+django==1.11.4
+django_extensions==1.9.1
+sqlparse
+jupyter==1.0.0
+rise==5.0.0
+pygraphviz
