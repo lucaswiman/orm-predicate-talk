@@ -15,8 +15,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <!-- General and theme style sheets -->
-<link rel="stylesheet" href="http://cdn.rawgit.com/hakimel/reveal.js/3.5.0//css/reveal.css">
-<link rel="stylesheet" href="http://cdn.rawgit.com/hakimel/reveal.js/3.5.0//css/theme/simple.css" id="theme">
+<link rel="stylesheet" href="file:///Users/lucaswiman/personal/orm-predicate-talk/.venv/share/jupyter/nbextensions/rise/reveal.js/css/reveal.css">
+<link rel="stylesheet" href="file:///Users/lucaswiman/personal/orm-predicate-talk/.venv/share/jupyter/nbextensions/rise/reveal.js/css/theme/simple.css" id="theme">
 
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
@@ -24,14 +24,14 @@ if( window.location.search.match( /print-pdf/gi ) ) {
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = 'http://cdn.rawgit.com/hakimel/reveal.js/3.5.0//css/print/pdf.css';
+        link.href = 'file:///Users/lucaswiman/personal/orm-predicate-talk/.venv/share/jupyter/nbextensions/rise/reveal.js/css/print/pdf.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
 }
 
 </script>
 
 <!--[if lt IE 9]>
-<script src="http://cdn.rawgit.com/hakimel/reveal.js/3.5.0//lib/js/html5shiv.js"></script>
+<script src="file:///Users/lucaswiman/personal/orm-predicate-talk/.venv/share/jupyter/nbextensions/rise/reveal.js/lib/js/html5shiv.js"></script>
 <![endif]-->
 
 <!-- Loading the mathjax macro -->
@@ -11903,15 +11903,36 @@ a.anchor-link {
 <section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sqlparse</span><span class="p">;</span> <span class="kn">from</span> <span class="nn">django</span> <span class="k">import</span> <span class="n">setup</span><span class="p">;</span> <span class="n">setup</span><span class="p">()</span>
 <span class="kn">from</span> <span class="nn">app.models</span> <span class="k">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">django.db.models</span> <span class="k">import</span> <span class="o">*</span>
+<span class="n">Node</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[35]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(7, {&#39;app.Node&#39;: 3, &#39;app.Node_fk&#39;: 0, &#39;app.Node_m2m&#39;: 4})</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -11931,25 +11952,50 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="https://www.djangoproject.com/"><strong>Django</strong>:</a> "The web framework for perfectionists with deadlines."</p>
+<h2 id="Django-ORM-Predicates">Django ORM Predicates<a class="anchor-link" href="#Django-ORM-Predicates">&#182;</a></h2><p><a href="https://www.djangoproject.com/"><strong>Django</strong>:</a> "The web framework for perfectionists with deadlines."</p>
 <p><a href="https://en.wikipedia.org/wiki/Object-relational_mapping"><strong>ORM</strong> (Object Relational Mapper)</a>: Maps a relational database onto Python objects. (<code>django.db.models</code>)</p>
-<p><a href="https://en.wikipedia.org/wiki/Predicate_(mathematical_logic"><strong>Predicate</strong>:</a>) "a statement that may be true or false depending on the values of its variables."</p>
+<p><a href="https://en.wikipedia.org/wiki/Predicate_(mathematical_logic)"><b>Predicate</b>:</a> "a statement that may be true or false depending on the values of its variables."</p>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Title of the talk is "Django ORM predicates"
+Let's break that down</p>
+<p>Django... "as you all know"</p>
+<p>ORM... Also Rails' <code>ActiveRecord</code>, Java's Hibernate, etc.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Django-ORM's-goals-(AFAICT)">Django ORM's goals (AFAICT)<a class="anchor-link" href="#Django-ORM's-goals-(AFAICT)">&#182;</a></h2><ul>
 <li>Make database rows behave like python objects. ("object relational")</li>
-<li>Make querysets behave like python containers, including logically. ("mapper")</li>
+<li>Make querysets behave like python containers (lists, sets), including logically. ("mapper")</li>
 </ul>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>AFAICT = As Far AS I Can Tell</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -11967,7 +12013,7 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here are some notes</p>
+<p>n/a</p>
 
 </div>
 </div>
@@ -11979,20 +12025,91 @@ a.anchor-link {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Django's ORM provides a DSL for constructing SQL queries.</p>
 <h3 id="Terminology">Terminology<a class="anchor-link" href="#Terminology">&#182;</a></h3><ul>
-<li><code>double__underscore__string=thing</code> is a "lookup"</li>
+<li><code>double__underscore__string=thing</code> is a "lookup"<ul>
+<li>"Lookup" can also refer to <code>__iexact</code>, <code>__in</code>, etc.</li>
+</ul>
+</li>
 <li><code>QuerySet</code> is an iterable container class for a SQL query</li>
 </ul>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For the purposes of this talk.</p>
+<p>"Lookup" seems to be an overloaded term in Django</p>
+<p>if there's a better thing to call query components, <em>let me know after the talk</em>.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">pass</span>
+<span class="k">class</span> <span class="nc">InsuranceClaim</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="s1">&#39;app.InsuranceClaim&#39;</span><span class="p">)</span>
+    <span class="n">payer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;app.InsurancePayer&#39;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">InsurancePayer</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Simple example from Counsyl: Patients place orders for genetic tests, which can be paid for by an insurance claim, which has a payer (e.g. "Blue Cross" or "Aetna")</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pprint_sql</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">qs</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">sqlparse</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">qs</span><span class="o">.</span><span class="n">only</span><span class="p">(</span><span class="s1">&#39;pk&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">),</span> <span class="n">reindent</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-<span class="n">pprint_sql</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">claim__payer__name</span><span class="o">=</span><span class="s1">&#39;Aetna&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sqlparse</span>
+<span class="k">def</span> <span class="nf">pprint_sql</span><span class="p">(</span><span class="n">queryset</span><span class="p">):</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">queryset</span><span class="o">.</span><span class="n">only</span><span class="p">(</span><span class="s1">&#39;pk&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sqlparse</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">reindent</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Helper function using the <code>sqlparse</code> library to nicely format SQL queries.</p>
+<p>Protip: querysets have a <code>.query</code> attribute which can be cast to a string to get the raw SQL.</p>
+<p>Very useful for debugging the ORM.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pprint_sql</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">claim__payer__name</span><span class="o">=</span><span class="s1">&#39;Aetna&#39;</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -12021,23 +12138,45 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 </div>
 </div>
 
-</div></section><section>
+</div><aside class="notes">
+
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="k">pass</span>
-<span class="k">class</span> <span class="nc">InsuranceClaim</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="s1">&#39;app.InsuranceClaim&#39;</span><span class="p">)</span>
-    <span class="n">payer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;app.InsurancePayer&#39;</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">InsurancePayer</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
-</pre></div>
+<p>Two joins: order to insurance claim to insurance payer, filters to orders whose claim's payer's name is "Aetna".</p>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Subtlety:-Lookups-are-trees.">Subtlety: Lookups are trees.<a class="anchor-link" href="#Subtlety:-Lookups-are-trees.">&#182;</a></h2><div class="highlight"><pre><span></span><span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+    <span class="n">foo__bar__attr1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">foo__bar__attr2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">foo__baz__attr3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+<p><img src="attachment:image.png" alt="image.png"></p>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A useful way to think of how the ORM evaluates queries.</p>
+<p>The ORM will form a single join for the <code>bar</code> relation, and have two clauses in the <code>WHERE</code> statement.</p>
+<p>Does not quite work that way for <code>.exclude()</code> queries.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12048,42 +12187,66 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 <li>Much easier to use than SQL. Very concise.</li>
 <li>Works pretty well in practice.</li>
 </ul>
-<p>Note: Like most successful DSLs, this may have been luck.</p>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Django's-query-DSL-has-its-warts.">Django's query DSL has its warts.<a class="anchor-link" href="#Django's-query-DSL-has-its-warts.">&#182;</a></h3><p><img src="attachment:image.png" style="width: 15%; float: right;" /></p>
+<p>Like most successful DSLs, this is probably a combination of luck &amp; skill.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Warts">Warts<a class="anchor-link" href="#Warts">&#182;</a></h3><p><img src="attachment:image.png" style="width: 15%; float: right;" /></p>
 <ul style="width: 70%;">
-<li>Weird semantics on joins (more later).</li>
+<li>Weird semantics on joins.</li>
 <li>Confusing casting semantics.</li>
 <li>Weird hodgepodge like `__week_day` lookup.</li>
 </ul>
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="django.db.models.Q-objects"><code>django.db.models.Q</code> objects<a class="anchor-link" href="#django.db.models.Q-objects">&#182;</a></h3><div class="highlight"><pre><span></span><span class="n">some_queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<ul>
+<li>Casting around date and time</li>
+</ul>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="django.db.models.Q-objects"><code>django.db.models.Q</code> objects<a class="anchor-link" href="#django.db.models.Q-objects">&#182;</a></h2><div class="highlight"><pre><span></span><span class="n">some_queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
-<p>is equivalent to:</p>
+<p>is equivalent to either:</p>
 <div class="highlight"><pre><span></span><span class="n">some_queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">Q</span><span class="p">(</span><span class="n">bar</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">some_queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="django.db.models.Q-objects"><code>django.db.models.Q</code> objects<a class="anchor-link" href="#django.db.models.Q-objects">&#182;</a></h3><div class="highlight"><pre><span></span><span class="n">some_queryset</span><span class="o">.</span><span class="n">exclude</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<h2 id="django.db.models.Q-objects"><code>django.db.models.Q</code> objects<a class="anchor-link" href="#django.db.models.Q-objects">&#182;</a></h2><div class="highlight"><pre><span></span><span class="n">some_queryset</span><span class="o">.</span><span class="n">exclude</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 <p>is equivalent to:</p>
 <div class="highlight"><pre><span></span><span class="n">some_queryset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">~</span><span class="n">Q</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
@@ -12091,7 +12254,7 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12105,7 +12268,23 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Break it down:</p>
+<ul>
+<li>Boolean (True or False)</li>
+<li>Expression Tree (like an abstract syntax tree, where the nodes are connectors or lookups).</li>
+<li>Predicates: Something that can be true or false. "The payer's name is Aetna" from earlier.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12114,15 +12293,34 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 <li>Code reuse (use the same query in different places).</li>
 <li>Literate variable names:</li>
 </ul>
-<div class="highlight"><pre><span></span><span class="n">has_high_risk_indicator</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="n">has_twin_pregnancy</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-    <span class="n">has_high_risk_indicator</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">has_twin_pregnancy</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="n">has_high_risk_indicator</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span>
+    <span class="n">indications__risk_level</span><span class="o">=</span><span class="s2">&quot;HIGH&quot;</span><span class="p">)</span>
+<span class="n">has_twin_pregnancy</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="n">pregnancy__count__gte</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">is_covered_Q</span> <span class="o">=</span> <span class="n">has_high_risk_indicator</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">has_twin_pregnancy</span>
+<span class="k">def</span> <span class="nf">get_covered_people_for_processing</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Person</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_covered_Q</span><span class="p">,</span>
+                                 <span class="n">status</span><span class="o">=</span><span class="s1">&#39;UNPROCESSED&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One of the tests we perform at Counsyl is only reimbursed by insurance in some circumstances:</p>
+<ul>
+<li>Some risk indicator like an abnormal ultrasound.</li>
+<li>Validation trials exist showing it works (not done for twin or triplet pregnancies, etc.)</li>
+</ul>
+<p>We can use <code>Q</code> objects to make code more comprehensible, or reuse <em>parts</em> of a query, like checking for a high risk indication.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12136,13 +12334,16 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Q-objects-still-suck"><code>Q</code> objects still suck<a class="anchor-link" href="#Q-objects-still-suck">&#182;</a></h3><p>They <em>require</em> database round trips xor code duplication</p>
-<div class="highlight"><pre><span></span><span class="n">has_high_risk_indicator</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>  <span class="c1"># TODO: fake/simplified logic for this; make more explicit.</span>
-<span class="n">has_twin_pregnancy</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="n">is_covered_Q</span> <span class="o">=</span> <span class="n">has_high_risk_indicator</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">has_twin_pregnancy</span>
-<span class="k">def</span> <span class="nf">is_person_covered_WET</span><span class="p">(</span><span class="n">person</span><span class="p">):</span>
-      <span class="k">return</span> <span class="n">some_duplicated_logic</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">is_person_covered_SLOW</span><span class="p">(</span><span class="n">person</span><span class="p">):</span>
+<h3 id="Q-objects-still-suck"><code>Q</code> objects still suck<a class="anchor-link" href="#Q-objects-still-suck">&#182;</a></h3><p>They <em>require</em> database round trips or code duplication to examine individual records.</p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Slow-but-DRY">Slow but DRY<a class="anchor-link" href="#Slow-but-DRY">&#182;</a></h3><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_person_covered_SLOW</span><span class="p">(</span><span class="n">person</span><span class="p">):</span>
       <span class="k">return</span> <span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">objects</span>
               <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_covered_Q</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">person</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
               <span class="o">.</span><span class="n">exists</span><span class="p">())</span>
@@ -12150,7 +12351,18 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Define DRY: Don't Repeat Yourself</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12166,12 +12378,103 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Boolean-expression-trees-of-logical-predicates"><em>Boolean expression trees of logical predicates</em><a class="anchor-link" href="#Boolean-expression-trees-of-logical-predicates">&#182;</a></h2><p>Can't Python do that? Python is good at stuff.</p>
+<p>Actual example from a production database. All that's measured here is:</p>
+<ul>
+<li>Query parsing.</li>
+<li>Network latency.</li>
+<li>Checking whether the table has at least one row.</li>
+</ul>
+<p>700 microseconds is a lot of microseconds. Queries add up!</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Code-Duplication">Code Duplication<a class="anchor-link" href="#Code-Duplication">&#182;</a></h2><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_person_covered_WET</span><span class="p">(</span><span class="n">person</span><span class="p">):</span>
+    <span class="n">has_high_risk_indicator</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span>
+        <span class="n">ind</span><span class="o">.</span><span class="n">risk_level</span> <span class="o">==</span> <span class="s2">&quot;HIGH&quot;</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">person</span><span class="o">.</span><span class="n">indications</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+    <span class="n">has_twin_pregnancy</span> <span class="o">=</span> <span class="n">person</span><span class="o">.</span><span class="n">pregnancy</span><span class="o">.</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">has_high_risk_indicator</span>
+            <span class="ow">and</span> <span class="n">has_twin_pregnancy</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>WET = not DRY (ha ha)</p>
+<p>Notice the bug?</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Code-duplication-leads-to-bugs">Code duplication leads to bugs<a class="anchor-link" href="#Code-duplication-leads-to-bugs">&#182;</a></h2><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_person_covered_WET</span><span class="p">(</span><span class="n">person</span><span class="p">):</span>
+    <span class="n">has_high_risk_indicator</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span>
+        <span class="n">ind</span><span class="o">.</span><span class="n">risk_level</span> <span class="o">==</span> <span class="s2">&quot;HIGH&quot;</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">person</span><span class="o">.</span><span class="n">indications</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+    <span class="n">has_twin_pregnancy</span> <span class="o">=</span> <span class="n">person</span><span class="o">.</span><span class="n">pregnancy</span><span class="o">.</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">has_high_risk_indicator</span> <span class="ow">and</span>
+            <span class="ow">not</span> <span class="n">has_twin_pregnancy</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Should be does <em>not</em> have a twin pregnancy. You need to fix it in multiple places every time something changes, etc.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Boolean-expression-trees-of-logical-predicates"><em>Boolean expression trees of logical predicates</em><a class="anchor-link" href="#Boolean-expression-trees-of-logical-predicates">&#182;</a></h2>
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Earlier we say <code>Q</code> objects are..</p>
+
+</div>
+</div>
+</div>
+</aside></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Can't Python do that? Python is good at stuff.</p>
 
 </div>
 </div>
@@ -12181,15 +12484,25 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Enter-django-predicate">Enter <code>django-predicate</code><a class="anchor-link" href="#Enter-django-predicate">&#182;</a></h3><ul>
-<li>Developed by Preston Holmes (@ptone)</li>
-<li><a href="https://github.com/django-predicate/django-predicate">https://github.com/django-predicate/django-predicate</a> (TODO: add <code>P</code>)</li>
-<li>Pretty much exactly&trade; like <code>Q</code> <br>but with <code>__contains__</code>, <code>eval</code> and <code>filter</code>.</li>
+<li>Developed by Preston Holmes (@ptone), <a href="https://github.com/django-predicate/django-predicate">https://github.com/django-predicate/django-predicate</a></li>
+<li>Defines <code>P</code> which is Pretty much exactly&trade; like <code>Q</code> <br>but with <code>__contains__</code>, <code>eval</code> and <code>filter</code>.</li>
 <li><code>pip install django-predicate</code></li>
 </ul>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>P for Predicate, Q for query</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12203,14 +12516,15 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h3><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">predicate</span> <span class="kn">import</span> <span class="n">P</span>
-<span class="n">has_high_risk_indicator</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="n">has_twin_pregnancy</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">has_high_risk_indicator</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span>
+    <span class="n">indications__risk_level</span><span class="o">=</span><span class="s2">&quot;HIGH&quot;</span><span class="p">)</span>
+<span class="n">has_twin_pregnancy</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">pregnancy__count__gte</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">is_covered_P</span> <span class="o">=</span> <span class="n">has_high_risk_indicator</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">has_twin_pregnancy</span>
 <span class="k">def</span> <span class="nf">is_person_covered_DRY_and_FAST</span><span class="p">(</span><span class="n">person</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">person</span> <span class="ow">in</span> <span class="n">is_covered_P</span>
@@ -12220,7 +12534,29 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2>Example application: <br> Record linkage</h2>
+<p><img src="attachment:image.png" alt="image.png"></p>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We get the equivalent of Explanations of Benefits back from insurers. Sometimes the data doesn't quite match our patient records (e.g. due to a name change or typo).</p>
+<p>We want to automatically match as many as possible, and provide informative view of possible matches for manual resolution in a queue.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12236,16 +12572,79 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Record-Linkage">Record Linkage<a class="anchor-link" href="#Record-Linkage">&#182;</a></h3><p><img src="attachment:image.png" width="70%" /></p>
+<p><img src="attachment:image.png" width="70%" /></p>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+
+<pre><code>PUNCTUATION_AND_SPACES = r'[\s!"#$%&amp;\'()*+,\-./:;&lt;=&gt;?\[\\\]^_`~]'
+PUNCTUATION_AND_SPACES_RE = re.compile(PUNCTUATION_AND_SPACES)
+REPEATED_PUNCTUATION_AND_SPACES = '%s*' % PUNCTUATION_AND_SPACES
+def convert_name_to_fuzzy_regex_string(name):
+    name = PUNCTUATION_AND_SPACES_RE.sub('', name)
+    name_with_arbitrary_punctuation = REPEATED_PUNCTUATION_AND_SPACES.join(
+        name) + REPEATED_PUNCTUATION_AND_SPACES
+    return '^%s$' % name_with_arbitrary_punctuation</code></pre>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here's one predicate for matching the first name.</p>
+<p>Mostly ignore the details. Point being: it's complicated.</p>
+
+</div>
+</div>
+</div>
+</aside></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">name_re</span> <span class="o">=</span> <span class="n">convert_name_to_fuzzy_regex_string</span><span class="p">(</span>
+    <span class="n">eob</span><span class="o">.</span><span class="n">patient_first_name</span><span class="p">)</span>
+<span class="n">first_name_predicate</span> <span class="o">=</span>  <span class="n">P</span><span class="p">(</span>
+    <span class="n">insurance_card__patient_first_name__iregex</span><span class="o">=</span><span class="n">name_re</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;color: {% if claim in patient_member_id_predicate %}green{% else %}red{% endif %};&quot;</span><span class="p">&gt;</span>
+</pre></div>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>No duplication of logic between querying the database and showing match data to users.</p>
+
+</div>
+</div>
+</div>
+</aside></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12266,7 +12665,18 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 
 </div>
 </div>
-</div><div class="fragment">
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So if you're an open source maintainer, you're probably feeling...</p>
+
+</div>
+</div>
+</div>
+</aside><div class="fragment">
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12275,16 +12685,126 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 
 </div>
 </div>
-</div></div></section></section><section><section>
+</div><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Open-source">Open source<a class="anchor-link" href="#Open-source">&#182;</a></h2><ul>
 <li>@ptone was very happy when I emailed asking to take over maintenance. 🌈</li>
-<li>Small OSS projects are a better way to get started (IMO)</li>
+<li>Small OSS projects are a great way to get started</li>
+<li>Contributions can come out of day-to-day work</li>
+<li>Great way to learn and build a public resume</li>
 </ul>
-<p>(TODO: Expand this secttion with concrete things to do to help with OSS)</p>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Large projects can be intimidating and bugs are usually hard.</p>
+<p>Lots of small projects which could use a bit of helping hand.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Open-source-(advice)">Open source (advice)<a class="anchor-link" href="#Open-source-(advice)">&#182;</a></h2><ul>
+<li>Be obsequiously polite and meticulously detailed</li>
+<li>Submit your best work</li>
+</ul>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>My opinion; limited experience, but it's worked well for me.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Open-Source-(advice)">Open Source (advice)<a class="anchor-link" href="#Open-Source-(advice)">&#182;</a></h2><ul>
+<li>Do grunt work:<ul>
+<li>improve test suite</li>
+<li>update documentation/dependencies</li>
+</ul>
+</li>
+<li>Be very patient: maintainers are volunteers.</li>
+</ul>
+
+</div>
+</div>
+</div><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Finding-bugs">Finding bugs<a class="anchor-link" href="#Finding-bugs">&#182;</a></h2><ul>
+<li>Parameterized test suite across:<ul>
+<li>database backends</li>
+<li>Django versions</li>
+<li>Use <code>tox</code>, <code>detox</code>, <code>tox-travis</code> and travis-ci.org</li>
+</ul>
+</li>
+<li>Found bugs with Django 1.8 &amp; sqlite</li>
+</ul>
+
+</div>
+</div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Tox: sets up parameterized test suites across any variable you want.</p>
+<p>Detox: parallel tox</p>
+<p>tox-travis: makes tox and travis work together</p>
+<p>Travis: free countinuous integration for public projects.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Finding-bugs">Finding bugs<a class="anchor-link" href="#Finding-bugs">&#182;</a></h2><ul>
+<li>Find an invariant and test for it.</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">OrmP</span><span class="p">(</span><span class="n">P</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span><span class="o">.</span><span class="n">_default_manager</span>
+        <span class="n">orm_value</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">instance</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+        <span class="n">super_value</span> <span class="o">=</span> <span class="n">original_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span>
+        <span class="n">assert_equal</span><span class="p">(</span><span class="n">orm_value</span><span class="p">,</span> <span class="n">super_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">super_value</span>
+</pre></div>
 
 </div>
 </div>
@@ -12294,37 +12814,52 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Bugs">Bugs<a class="anchor-link" href="#Bugs">&#182;</a></h2><ul>
-<li>Some lookup types were buggy. ☑️</li>
-<li>Multiple conditions on the same join didn't work right. ☑️</li>
-<li>Reverse relations not handled right. ☑️&nbsp;&nbsp;(sort of)</li>
-<li>Negation was unhandled. ☑️&nbsp;&nbsp;(sort of)</li>
+<li>Multiple conditions on the same join didn't work right.</li>
+<li>Reverse relations not handled right.</li>
+<li>Negation was unhandled.</li>
 </ul>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Multiple-conditions-on-the-same-join">Multiple conditions on the same join<a class="anchor-link" href="#Multiple-conditions-on-the-same-join">&#182;</a></h2><p>Lookups are trees.</p>
-<div class="highlight"><pre><span></span><span class="n">Q</span><span class="p">(</span><span class="n">foo__bar__attr1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-  <span class="n">foo__bar__attr2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-  <span class="n">foo__baz__attr3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-<p><img src="attachment:image.png" alt="image.png"></p>
+<h2 id="de-Morgan's-Laws"><a href="https://en.wikipedia.org/wiki/De_Morgan%27s_laws">de Morgan's Laws</a><a class="anchor-link" href="#de-Morgan's-Laws">&#182;</a></h2>
+<pre><code>~(p &amp; q) = ~p | ~q
+~(p | q) = ~p &amp; ~q</code></pre>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div><aside class="notes">
+
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="de-Morgan's-Laws">de Morgan's Laws<a class="anchor-link" href="#de-Morgan's-Laws">&#182;</a></h2>
-<pre><code>~(p &amp; q) = ~p | ~q
-~(p | q) = ~p &amp; ~q</code></pre>
-<p>TODO: add english</p>
+<blockquote><p>the negation of a disjunction is the conjunction of the negations;</p>
+<p>the negation of a conjunction is the disjunction of the negations;</p>
+</blockquote>
+<p>Basic component of classical logic</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Proof-by-python">Proof by python<a class="anchor-link" href="#Proof-by-python">&#182;</a></h2><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">bools</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">all</span><span class="p">((</span><span class="ow">not</span> <span class="p">(</span><span class="n">p</span> <span class="ow">and</span> <span class="n">q</span><span class="p">))</span> <span class="o">==</span> <span class="p">(</span><span class="ow">not</span> <span class="n">p</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">q</span><span class="p">)</span>
+<span class="o">...</span>     <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="n">bools</span><span class="p">,</span> <span class="n">bools</span><span class="p">))</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">all</span><span class="p">((</span><span class="ow">not</span> <span class="p">(</span><span class="n">p</span> <span class="ow">or</span> <span class="n">q</span><span class="p">))</span> <span class="o">==</span> <span class="p">(</span><span class="ow">not</span> <span class="n">p</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">q</span><span class="p">)</span>
+<span class="o">...</span>     <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="n">bools</span><span class="p">,</span> <span class="n">bools</span><span class="p">))</span>
+<span class="bp">True</span>
+</pre></div>
 
 </div>
 </div>
@@ -12336,18 +12871,57 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 <h2 id="de-Morgan's-Laws-violation">de Morgan's Laws violation<a class="anchor-link" href="#de-Morgan's-Laws-violation">&#182;</a></h2>
 </div>
 </div>
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Django and logic don't see eye to eye on this stuff.</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">m2m</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="s1">&#39;self&#39;</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reverse_m2m&#39;</span><span class="p">)</span>
+    <span class="n">attr1</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">attr2</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
 <span class="n">root</span><span class="o">.</span><span class="n">m2m</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="n">attr2</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
 <span class="n">root</span><span class="o">.</span><span class="n">m2m</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">attr1</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)))</span>
-<span class="c1"># TODO</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="o">~</span><span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="o">~</span><span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">))))</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">q_double_negative</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)))</span>
+<span class="n">q_de_morgan</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="o">~</span><span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="o">~</span><span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">q_double_negative</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">q_de_morgan</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -12365,7 +12939,8 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>&lt;QuerySet []&gt;
-&lt;QuerySet [Node(pk=1), Node(pk=4)]&gt;
+&lt;QuerySet [Node(pk=19)]&gt;
+&lt;QuerySet [Node(pk=19)]&gt;
 </pre>
 </div>
 </div>
@@ -12373,23 +12948,58 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 </div>
 </div>
 
-</div></div></section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">m2m</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="s1">&#39;self&#39;</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reverse_m2m&#39;</span><span class="p">)</span>
-    <span class="n">fk</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="s1">&#39;self&#39;</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reverse_fk&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">one_to_one</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span>
-        <span class="s1">&#39;self&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reverse_one_to_one&#39;</span><span class="p">)</span>
-    <span class="n">attr1</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
-    <span class="n">attr2</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">predicate</span> <span class="k">import</span> <span class="n">P</span>
+<span class="n">nodes</span> <span class="o">=</span> <span class="n">Node</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">m2m__attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">P</span><span class="p">(</span><span class="n">m2m__attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">p_double_negative</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">m2m__attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">P</span><span class="p">(</span><span class="n">m2m__attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)))</span>
+<span class="n">p_de_morgan</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="o">~</span><span class="n">P</span><span class="p">(</span><span class="n">m2m__attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="o">~</span><span class="n">P</span><span class="p">(</span><span class="n">m2m__attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p_double_negative</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p_de_morgan</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>  <span class="c1"># This was hard.</span>
 </pre></div>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[]
+[Node(pk=19)]
+[Node(pk=19)]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div><aside class="notes">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We try to mirror the Django ORM, but there are still some edge cases (see unit tests of the library).</p>
+
+</div>
+</div>
+</div>
+</aside></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -12400,7 +13010,7 @@ WHERE &#34;app_insurancepayer&#34;.&#34;name&#34; = Aetna
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pprint_sql</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)))</span>
@@ -12449,9 +13059,6 @@ WHERE (T3.&#34;attr1&#34; = foo
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">m2m</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="s1">&#39;self&#39;</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reverse_m2m&#39;</span><span class="p">)</span>
-    <span class="n">fk</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="s1">&#39;self&#39;</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reverse_fk&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">one_to_one</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span>
-        <span class="s1">&#39;self&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reverse_one_to_one&#39;</span><span class="p">)</span>
     <span class="n">attr1</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
     <span class="n">attr2</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
 </pre></div>
@@ -12461,7 +13068,7 @@ WHERE (T3.&#34;attr1&#34; = foo
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pprint_sql</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="o">~</span><span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr1</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="o">~</span><span class="n">Q</span><span class="p">(</span><span class="n">m2m__attr2</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">))))</span>
@@ -12528,27 +13135,25 @@ WHERE NOT ((NOT (&#34;app_node&#34;.&#34;id&#34; IN
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Thanks">Thanks<a class="anchor-link" href="#Thanks">&#182;</a></h2><ul>
 <li>Rudy &amp; Sanjay for arranging the talk</li>
-<li>@ptone for writing django-predicate</li>
+<li>Preston for writing django-predicate</li>
 <li>Counsyl for having a very flexible open source policy 😎</li>
 </ul>
 
 </div>
 </div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## WE&#39;RE HIRING</span>
-
-<span class="n">Link</span> <span class="n">to</span> <span class="n">Counsyl</span> <span class="n">careers</span><span class="o">.</span>
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="WE'RE-HIRING">WE'RE HIRING<a class="anchor-link" href="#WE'RE-HIRING">&#182;</a></h2><ul>
+<li><a href="https://www.counsyl.com/careers/">https://www.counsyl.com/careers/</a></li>
+<li>Interesting problems from genetics to business.</li>
+<li>Awesome FOSS policy (ask me!)</li>
+</ul>
 
 </div>
 </div>
-</div>
-
 </div><aside class="notes">
 %%HTML
 <style>
@@ -12590,7 +13195,7 @@ div.meme-list img !important {
 } */
 
 </style>
-</aside>
+</aside></section></section>
 </div>
 </div>
 
@@ -12603,8 +13208,8 @@ require(
       waitSeconds: 15
     },
     [
-      "http://cdn.rawgit.com/hakimel/reveal.js/3.5.0//lib/js/head.min.js",
-      "http://cdn.rawgit.com/hakimel/reveal.js/3.5.0//js/reveal.js"
+      "file:///Users/lucaswiman/personal/orm-predicate-talk/.venv/share/jupyter/nbextensions/rise/reveal.js/lib/js/head.min.js",
+      "file:///Users/lucaswiman/personal/orm-predicate-talk/.venv/share/jupyter/nbextensions/rise/reveal.js/js/reveal.js"
     ],
 
     function(head, Reveal){
@@ -12619,9 +13224,9 @@ require(
 
             // Optional libraries used to extend on reveal.js
             dependencies: [
-                { src: "http://cdn.rawgit.com/hakimel/reveal.js/3.5.0//lib/js/classList.js",
+                { src: "file:///Users/lucaswiman/personal/orm-predicate-talk/.venv/share/jupyter/nbextensions/rise/reveal.js/lib/js/classList.js",
                   condition: function() { return !document.body.classList; } },
-                { src: "http://cdn.rawgit.com/hakimel/reveal.js/3.5.0//plugin/notes/notes.js",
+                { src: "file:///Users/lucaswiman/personal/orm-predicate-talk/.venv/share/jupyter/nbextensions/rise/reveal.js/plugin/notes/notes.js",
                   async: true,
                   condition: function() { return !!document.body.classList; } }
             ]

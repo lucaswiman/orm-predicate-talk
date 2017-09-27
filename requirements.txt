@@ -5,3 +5,4 @@ sqlparse
 jupyter==1.0.0
 rise==5.0.0
 pygraphviz
+django-predicate==1.4.0
