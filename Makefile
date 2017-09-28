@@ -19,8 +19,9 @@ slides-html: .venv
 	source .venv/bin/activate; \
 	jupyter-nbextension install rise --py --sys-prefix; \
 	jupyter-nbextension enable rise --py --sys-prefix; \
-	jupyter-nbconvert --to slides presentation.ipynb --reveal-prefix=file://$(current_dir)/.venv/share/jupyter/nbextensions/rise/reveal.js;
-	open presentation.slides.html
+	jupyter-nbconvert --to slides presentation.ipynb --reveal-prefix=file://$(current_dir)/.venv/share/jupyter/nbextensions/rise/reveal.js
+	mv presentation.slides.html index.html
+	open index.html
 
 
 .PHONY: slides
